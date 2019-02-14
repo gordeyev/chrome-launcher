@@ -38,10 +38,13 @@ function darwin() {
     // Retains one per line to maintain readability.
     // clang-format off
     const priorities = [
-        { regex: new RegExp(`^${process.env.HOME}/Applications/.*Chrome.app`), weight: 50 },
-        { regex: new RegExp(`^${process.env.HOME}/Applications/.*Chrome Canary.app`), weight: 51 },
-        { regex: /^\/Applications\/.*Chrome.app/, weight: 100 },
-        { regex: /^\/Applications\/.*Chrome Canary.app/, weight: 101 },
+        { regex: new RegExp(`^${process.env.HOME}/Applications/.*Chromium.app`), weight: 50 },
+        { regex: new RegExp(`^${process.env.HOME}/Applications/.*Chrome.app`), weight: 51 },
+        { regex: new RegExp(`^${process.env.HOME}/Applications/.*Chrome Canary.app`), weight: 52 },
+        { regex: /^\/Applications\/.*Chromium.app/, weight: 100 },
+        { regex: /^\/Applications\/.*Chrome.app/, weight: 101 },
+        { regex: /^\/Applications\/.*Chrome Canary.app/, weight: 102 },
+        { regex: /^\/Volumes\/.*Chromium.app/, weight: -3 },
         { regex: /^\/Volumes\/.*Chrome.app/, weight: -2 },
         { regex: /^\/Volumes\/.*Chrome Canary.app/, weight: -1 },
     ];
@@ -88,10 +91,10 @@ function linux() {
     });
     // Look for google-chrome(-stable) & chromium(-browser) executables by using the which command
     const executables = [
+        'chromium',
+        'chromium-browser',
         'google-chrome-stable',
         'google-chrome',
-        'chromium-browser',
-        'chromium',
     ];
     executables.forEach((executable) => {
         try {
@@ -108,11 +111,11 @@ function linux() {
         throw new utils_1.ChromePathNotSetError();
     }
     const priorities = [
-        { regex: /chrome-wrapper$/, weight: 51 },
-        { regex: /google-chrome-stable$/, weight: 50 },
-        { regex: /google-chrome$/, weight: 49 },
-        { regex: /chromium-browser$/, weight: 48 },
-        { regex: /chromium$/, weight: 47 },
+        { regex: /chromium$/, weight: 51 },
+        { regex: /chrome-wrapper$/, weight: 50 },
+        { regex: /google-chrome-stable$/, weight: 49 },
+        { regex: /google-chrome$/, weight: 48 },
+        { regex: /chromium-browser$/, weight: 47 },
     ];
     if (process.env.LIGHTHOUSE_CHROMIUM_PATH) {
         priorities.unshift({ regex: new RegExp(`${process.env.LIGHTHOUSE_CHROMIUM_PATH}`), weight: 100 });
